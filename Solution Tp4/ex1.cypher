@@ -1,0 +1,241 @@
+
+MATCH (n) DETACH DELETE n;
+
+CREATE CONSTRAINT etudiant_id IF NOT EXISTS FOR (e:Etudiant) REQUIRE e.id IS UNIQUE;
+CREATE CONSTRAINT cours_code IF NOT EXISTS FOR (c:Cours) REQUIRE c.code IS UNIQUE;
+CREATE CONSTRAINT competence_nom IF NOT EXISTS FOR (c:Competence) REQUIRE c.nom IS UNIQUE;
+
+UNWIND [
+  {nom: "Python",          categorie: "Programmation"},
+  {nom: "Java",            categorie: "Programmation"},
+  {nom: "SQL",             categorie: "Bases de Données"},
+  {nom: "NoSQL",           categorie: "Bases de Données"},
+  {nom: "Machine Learning",categorie: "IA"},
+  {nom: "Deep Learning",   categorie: "IA"},
+  {nom: "React",           categorie: "Web"},
+  {nom: "Docker",          categorie: "DevOps"},
+  {nom: "Linux",           categorie: "Systèmes"},
+  {nom: "Réseaux",         categorie: "Infrastructure"}
+] AS comp
+MERGE (:Competence {nom: comp.nom, categorie: comp.categorie});
+
+UNWIND [
+  {code: "INFO401", intitule: "Bases de Données Avancées", credits: 6, dept: "Informatique"},
+  {code: "INFO402", intitule: "Intelligence Artificielle",  credits: 6, dept: "Informatique"},
+  {code: "INFO403", intitule: "Développement Web",          credits: 4, dept: "Informatique"},
+  {code: "INFO404", intitule: "Systèmes Distribués",        credits: 5, dept: "Informatique"},
+  {code: "INFO405", intitule: "Cloud Computing",            credits: 4, dept: "Informatique"}
+] AS cours
+MERGE (:Cours {code: cours.code, intitule: cours.intitule,
+               credits: cours.credits, departement: cours.dept});
+
+UNWIND [
+  {id:"E001", prenom:"Ahmed",    nom:"Bensalem",   universite:"USTHB", filiere:"Informatique",  annee:3, ville:"Alger"},
+  {id:"E002", prenom:"Fatima",   nom:"Ouali",      universite:"USTHB", filiere:"Informatique",  annee:3, ville:"Alger"},
+  {id:"E003", prenom:"Yasmina", nom:"Hamidi",     universite:"UMBB",  filiere:"GL",             annee:2, ville:"Boumerdes"},
+  {id:"E004", prenom:"Karim",   nom:"Meziane",    universite:"USTHB", filiere:"Mathématiques",  annee:4, ville:"Alger"},
+  {id:"E005", prenom:"Nadia",   nom:"Belkacem",   universite:"USTO",  filiere:"Informatique",   annee:3, ville:"Oran"},
+  {id:"E006", prenom:"Youcef",  nom:"Amrani",     universite:"USTHB", filiere:"Electronique",   annee:2, ville:"Alger"},
+  {id:"E007", prenom:"Amira",   nom:"Saadi",      universite:"UMC",   filiere:"Telecoms",       annee:3, ville:"Constantine"},
+  {id:"E008", prenom:"Riad",    nom:"Khelifi",    universite:"UMBB",  filiere:"GL",             annee:4, ville:"Boumerdes"},
+  {id:"E009", prenom:"Soumia",  nom:"Bouzidi",    universite:"USTHB", filiere:"Informatique",   annee:1, ville:"Alger"},
+  {id:"E010", prenom:"Billal",  nom:"Rahmani",    universite:"UBMA",  filiere:"Informatique",   annee:3, ville:"Annaba"},
+  {id:"E011", prenom:"Houda",   nom:"Chelghoum",  universite:"USTHB", filiere:"Mathématiques",  annee:2, ville:"Alger"},
+  {id:"E012", prenom:"Amine",   nom:"Touati",     universite:"USTO",  filiere:"GL",             annee:3, ville:"Oran"},
+  {id:"E013", prenom:"Meriem",  nom:"Boukhalfa",  universite:"UMC",   filiere:"Informatique",   annee:4, ville:"Constantine"},
+  {id:"E014", prenom:"Walid",   nom:"Lagha",      universite:"UMBB",  filiere:"Electronique",   annee:2, ville:"Boumerdes"},
+  {id:"E015", prenom:"Karima",  nom:"Oussedik",   universite:"USTHB", filiere:"Telecoms",       annee:3, ville:"Alger"},
+  {id:"E016", prenom:"Samir",   nom:"Benali",     universite:"UBMA",  filiere:"Informatique",   annee:1, ville:"Annaba"},
+  {id:"E017", prenom:"Djamila", nom:"Hadj",       universite:"USTHB", filiere:"GL",             annee:4, ville:"Alger"},
+  {id:"E018", prenom:"Nassim",  nom:"Kherfane",   universite:"USTO",  filiere:"Mathématiques",  annee:2, ville:"Oran"},
+  {id:"E019", prenom:"Lynda",   nom:"Benmessaoud",universite:"UMC",   filiere:"Informatique",   annee:3, ville:"Constantine"},
+  {id:"E020", prenom:"Hichem",  nom:"Belloumi",   universite:"UMBB",  filiere:"Telecoms",       annee:3, ville:"Boumerdes"},
+  {id:"E021", prenom:"Sara",    nom:"Mansouri",   universite:"USTHB", filiere:"Informatique",   annee:2, ville:"Alger"},
+  {id:"E022", prenom:"Adel",    nom:"Zenati",     universite:"UBMA",  filiere:"GL",             annee:4, ville:"Annaba"},
+  {id:"E023", prenom:"Wafa",    nom:"Bouguerra",  universite:"USTHB", filiere:"Electronique",   annee:3, ville:"Alger"},
+  {id:"E024", prenom:"Sofiane", nom:"Aissaoui",   universite:"USTO",  filiere:"Informatique",   annee:1, ville:"Oran"},
+  {id:"E025", prenom:"Imene",   nom:"Lazreg",     universite:"UMC",   filiere:"Mathématiques",  annee:2, ville:"Constantine"},
+  {id:"E026", prenom:"Redha",   nom:"Chouiter",   universite:"UMBB",  filiere:"Informatique",   annee:3, ville:"Boumerdes"},
+  {id:"E027", prenom:"Asma",    nom:"Benatia",    universite:"USTHB", filiere:"Telecoms",       annee:4, ville:"Alger"},
+  {id:"E028", prenom:"Khalil",  nom:"Ferhat",     universite:"UBMA",  filiere:"GL",             annee:2, ville:"Annaba"},
+  {id:"E029", prenom:"Rania",   nom:"Bouazza",    universite:"USTHB", filiere:"Informatique",   annee:3, ville:"Alger"},
+  {id:"E030", prenom:"Mourad",  nom:"Benhamida",  universite:"USTO",  filiere:"Electronique",   annee:1, ville:"Oran"},
+  {id:"E031", prenom:"Hayet",   nom:"Ouchen",     universite:"UMC",   filiere:"Informatique",   annee:2, ville:"Constantine"},
+  {id:"E032", prenom:"Mehdi",   nom:"Benseghir",  universite:"UMBB",  filiere:"Mathématiques",  annee:3, ville:"Boumerdes"},
+  {id:"E033", prenom:"Samira",  nom:"Amroun",     universite:"USTHB", filiere:"GL",             annee:4, ville:"Alger"},
+  {id:"E034", prenom:"Tarek",   nom:"Boudiaf",    universite:"UBMA",  filiere:"Telecoms",       annee:2, ville:"Annaba"},
+  {id:"E035", prenom:"Nawal",   nom:"Khaldi",     universite:"USTHB", filiere:"Informatique",   annee:3, ville:"Alger"},
+  {id:"E036", prenom:"Fares",   nom:"Chikhi",     universite:"USTO",  filiere:"GL",             annee:1, ville:"Oran"},
+  {id:"E037", prenom:"Cylia",   nom:"Boumaza",    universite:"UMC",   filiere:"Informatique",   annee:2, ville:"Constantine"},
+  {id:"E038", prenom:"Hamza",   nom:"Djemai",     universite:"UMBB",  filiere:"Electronique",   annee:3, ville:"Boumerdes"},
+  {id:"E039", prenom:"Sabrina", nom:"Benslimane", universite:"USTHB", filiere:"Mathématiques",  annee:4, ville:"Alger"},
+  {id:"E040", prenom:"Ayoub",   nom:"Messaoudi",  universite:"UBMA",  filiere:"Informatique",   annee:2, ville:"Annaba"},
+  {id:"E041", prenom:"Nour",    nom:"Mabrouk",    universite:"USTHB", filiere:"Telecoms",       annee:3, ville:"Alger"},
+  {id:"E042", prenom:"Zakaria", nom:"Hammouche",  universite:"USTO",  filiere:"GL",             annee:1, ville:"Oran"},
+  {id:"E043", prenom:"Dalila",  nom:"Brahimi",    universite:"UMC",   filiere:"Informatique",   annee:2, ville:"Constantine"},
+  {id:"E044", prenom:"Ilyas",   nom:"Ghozlane",   universite:"UMBB",  filiere:"Mathématiques",  annee:3, ville:"Boumerdes"},
+  {id:"E045", prenom:"Sihem",   nom:"Baaziz",     universite:"USTHB", filiere:"Electronique",   annee:4, ville:"Alger"},
+  {id:"E046", prenom:"Ryad",    nom:"Mekki",      universite:"UBMA",  filiere:"Informatique",   annee:2, ville:"Annaba"},
+  {id:"E047", prenom:"Hassina", nom:"Nouri",      universite:"USTHB", filiere:"GL",             annee:3, ville:"Alger"},
+  {id:"E048", prenom:"Oussama", nom:"Boukerche",  universite:"USTO",  filiere:"Telecoms",       annee:1, ville:"Oran"},
+  {id:"E049", prenom:"Sonia",   nom:"Achour",     universite:"UMC",   filiere:"Informatique",   annee:2, ville:"Constantine"},
+  {id:"E050", prenom:"Raouf",   nom:"Guenane",    universite:"UMBB",  filiere:"GL",             annee:4, ville:"Boumerdes"}
+] AS data
+MERGE (e:Etudiant {id: data.id})
+SET e += data;
+
+UNWIND [
+  ["E001","E002"],["E002","E003"],["E003","E004"],["E004","E005"],
+  ["E005","E006"],["E006","E007"],["E007","E008"],["E008","E009"],
+  ["E009","E010"],["E010","E011"],["E011","E012"],["E012","E013"],
+  ["E013","E014"],["E014","E015"],["E015","E016"],["E016","E017"],
+  ["E017","E018"],["E018","E019"],["E019","E020"],["E020","E021"],
+  ["E021","E022"],["E022","E023"],["E023","E024"],["E024","E025"],
+  ["E025","E026"],["E026","E027"],["E027","E028"],["E028","E029"],
+  ["E029","E030"],["E030","E031"],["E031","E032"],["E032","E033"],
+  ["E033","E034"],["E034","E035"],["E035","E036"],["E036","E037"],
+  ["E037","E038"],["E038","E039"],["E039","E040"],["E040","E041"],
+  ["E041","E042"],["E042","E043"],["E043","E044"],["E044","E045"],
+  ["E045","E046"],["E046","E047"],["E047","E048"],["E048","E049"],
+  ["E049","E050"],["E050","E001"]   // ferme la boucle → graphe connexe
+] AS paire
+MATCH (a:Etudiant {id: paire[0]}), (b:Etudiant {id: paire[1]})
+MERGE (a)-[:CONNAIT]-(b);
+UNWIND [
+  ["E001","E004"],["E001","E006"],["E001","E011"],["E002","E009"],
+  ["E003","E008"],["E003","E020"],["E005","E012"],["E005","E024"],
+  ["E007","E013"],["E007","E019"],["E010","E016"],["E010","E040"],
+  ["E013","E037"],["E015","E027"],["E017","E033"],["E021","E029"],
+  ["E022","E028"],["E025","E031"],["E026","E032"],["E030","E038"],
+  ["E035","E041"],["E039","E045"],["E042","E048"],["E043","E049"]
+] AS extra
+MATCH (a:Etudiant {id: extra[0]}), (b:Etudiant {id: extra[1]})
+MERGE (a)-[:CONNAIT]-(b);
+
+UNWIND [
+  {eid:"E001", code:"INFO401", note:15.5, semestre:"S5"},
+  {eid:"E001", code:"INFO402", note:17.0, semestre:"S5"},
+  {eid:"E002", code:"INFO401", note:14.0, semestre:"S5"},
+  {eid:"E002", code:"INFO403", note:16.5, semestre:"S5"},
+  {eid:"E003", code:"INFO402", note:18.0, semestre:"S4"},
+  {eid:"E003", code:"INFO404", note:13.5, semestre:"S4"},
+  {eid:"E004", code:"INFO401", note:12.0, semestre:"S6"},
+  {eid:"E004", code:"INFO405", note:15.0, semestre:"S6"},
+  {eid:"E005", code:"INFO402", note:16.0, semestre:"S5"},
+  {eid:"E005", code:"INFO403", note:14.5, semestre:"S5"},
+  {eid:"E006", code:"INFO404", note:11.5, semestre:"S3"},
+  {eid:"E007", code:"INFO403", note:17.5, semestre:"S5"},
+  {eid:"E007", code:"INFO405", note:15.0, semestre:"S5"},
+  {eid:"E008", code:"INFO401", note:13.0, semestre:"S6"},
+  {eid:"E009", code:"INFO402", note:14.0, semestre:"S2"},
+  {eid:"E010", code:"INFO403", note:16.0, semestre:"S5"},
+  {eid:"E011", code:"INFO401", note:18.5, semestre:"S3"},
+  {eid:"E012", code:"INFO405", note:12.5, semestre:"S5"},
+  {eid:"E013", code:"INFO402", note:15.0, semestre:"S6"},
+  {eid:"E014", code:"INFO404", note:13.0, semestre:"S3"},
+  {eid:"E015", code:"INFO403", note:17.0, semestre:"S5"},
+  {eid:"E016", code:"INFO401", note:11.0, semestre:"S2"},
+  {eid:"E017", code:"INFO402", note:19.0, semestre:"S6"},
+  {eid:"E018", code:"INFO405", note:14.0, semestre:"S3"},
+  {eid:"E019", code:"INFO403", note:15.5, semestre:"S5"},
+  {eid:"E020", code:"INFO404", note:16.0, semestre:"S5"},
+  {eid:"E021", code:"INFO401", note:12.5, semestre:"S3"},
+  {eid:"E022", code:"INFO402", note:17.0, semestre:"S6"},
+  {eid:"E023", code:"INFO403", note:13.5, semestre:"S5"},
+  {eid:"E024", code:"INFO405", note:15.0, semestre:"S2"},
+  {eid:"E025", code:"INFO401", note:16.5, semestre:"S3"},
+  {eid:"E026", code:"INFO402", note:14.0, semestre:"S5"},
+  {eid:"E027", code:"INFO404", note:18.0, semestre:"S6"},
+  {eid:"E028", code:"INFO403", note:12.0, semestre:"S3"},
+  {eid:"E029", code:"INFO405", note:15.5, semestre:"S5"},
+  {eid:"E030", code:"INFO401", note:11.5, semestre:"S2"},
+  {eid:"E031", code:"INFO402", note:16.0, semestre:"S3"},
+  {eid:"E032", code:"INFO403", note:14.5, semestre:"S5"},
+  {eid:"E033", code:"INFO404", note:17.5, semestre:"S6"},
+  {eid:"E034", code:"INFO405", note:13.0, semestre:"S3"},
+  {eid:"E035", code:"INFO401", note:15.0, semestre:"S5"},
+  {eid:"E036", code:"INFO402", note:16.5, semestre:"S2"},
+  {eid:"E037", code:"INFO403", note:14.0, semestre:"S3"},
+  {eid:"E038", code:"INFO404", note:12.5, semestre:"S5"},
+  {eid:"E039", code:"INFO405", note:17.0, semestre:"S6"},
+  {eid:"E040", code:"INFO401", note:13.5, semestre:"S3"},
+  {eid:"E041", code:"INFO402", note:15.5, semestre:"S5"},
+  {eid:"E042", code:"INFO403", note:16.0, semestre:"S2"},
+  {eid:"E043", code:"INFO404", note:14.5, semestre:"S3"},
+  {eid:"E044", code:"INFO405", note:11.0, semestre:"S5"},
+  {eid:"E045", code:"INFO401", note:18.0, semestre:"S6"},
+  {eid:"E046", code:"INFO402", note:15.0, semestre:"S3"},
+  {eid:"E047", code:"INFO403", note:16.5, semestre:"S5"},
+  {eid:"E048", code:"INFO404", note:13.0, semestre:"S2"},
+  {eid:"E049", code:"INFO405", note:14.5, semestre:"S3"},
+  {eid:"E050", code:"INFO401", note:17.0, semestre:"S6"}
+] AS s
+MATCH (e:Etudiant {id: s.eid}), (c:Cours {code: s.code})
+MERGE (e)-[:SUIT {note: s.note, semestre: s.semestre}]->(c);
+// Niveaux : Débutant | Intermédiaire | Avancé | Expert
+UNWIND [
+  {eid:"E001", comp:"Python",          niveau:"Avancé",        score:85},
+  {eid:"E001", comp:"SQL",             niveau:"Intermédiaire", score:70},
+  {eid:"E001", comp:"Machine Learning",niveau:"Débutant",      score:40},
+  {eid:"E002", comp:"Java",            niveau:"Avancé",        score:80},
+  {eid:"E002", comp:"React",           niveau:"Intermédiaire", score:65},
+  {eid:"E003", comp:"Python",          niveau:"Expert",        score:95},
+  {eid:"E003", comp:"Deep Learning",   niveau:"Avancé",        score:88},
+  {eid:"E004", comp:"SQL",             niveau:"Expert",        score:92},
+  {eid:"E004", comp:"NoSQL",           niveau:"Intermédiaire", score:60},
+  {eid:"E005", comp:"Machine Learning",niveau:"Avancé",        score:82},
+  {eid:"E005", comp:"Python",          niveau:"Avancé",        score:78},
+  {eid:"E006", comp:"Linux",           niveau:"Intermédiaire", score:65},
+  {eid:"E006", comp:"Réseaux",         niveau:"Avancé",        score:80},
+  {eid:"E007", comp:"React",           niveau:"Expert",        score:90},
+  {eid:"E007", comp:"Java",            niveau:"Intermédiaire", score:68},
+  {eid:"E008", comp:"Docker",          niveau:"Avancé",        score:85},
+  {eid:"E008", comp:"Linux",           niveau:"Avancé",        score:82},
+  {eid:"E009", comp:"Python",          niveau:"Débutant",      score:45},
+  {eid:"E009", comp:"SQL",             niveau:"Débutant",      score:50},
+  {eid:"E010", comp:"Java",            niveau:"Avancé",        score:80},
+  {eid:"E011", comp:"SQL",             niveau:"Expert",        score:94},
+  {eid:"E012", comp:"Docker",          niveau:"Intermédiaire", score:62},
+  {eid:"E013", comp:"Deep Learning",   niveau:"Avancé",        score:86},
+  {eid:"E014", comp:"Réseaux",         niveau:"Intermédiaire", score:70},
+  {eid:"E015", comp:"React",           niveau:"Avancé",        score:83},
+  {eid:"E016", comp:"Python",          niveau:"Débutant",      score:42},
+  {eid:"E017", comp:"Machine Learning",niveau:"Expert",        score:96},
+  {eid:"E018", comp:"Linux",           niveau:"Intermédiaire", score:67},
+  {eid:"E019", comp:"Java",            niveau:"Avancé",        score:79},
+  {eid:"E020", comp:"Réseaux",         niveau:"Avancé",        score:84},
+  {eid:"E021", comp:"NoSQL",           niveau:"Intermédiaire", score:63},
+  {eid:"E022", comp:"Deep Learning",   niveau:"Expert",        score:91},
+  {eid:"E023", comp:"React",           niveau:"Intermédiaire", score:66},
+  {eid:"E024", comp:"Docker",          niveau:"Débutant",      score:48},
+  {eid:"E025", comp:"SQL",             niveau:"Avancé",        score:81},
+  {eid:"E026", comp:"Python",          niveau:"Intermédiaire", score:71},
+  {eid:"E027", comp:"Machine Learning",niveau:"Avancé",        score:87},
+  {eid:"E028", comp:"Java",            niveau:"Intermédiaire", score:64},
+  {eid:"E029", comp:"Linux",           niveau:"Avancé",        score:80},
+  {eid:"E030", comp:"Réseaux",         niveau:"Débutant",      score:47},
+  {eid:"E031", comp:"Python",          niveau:"Avancé",        score:83},
+  {eid:"E032", comp:"NoSQL",           niveau:"Intermédiaire", score:69},
+  {eid:"E033", comp:"Deep Learning",   niveau:"Avancé",        score:85},
+  {eid:"E034", comp:"Docker",          niveau:"Intermédiaire", score:72},
+  {eid:"E035", comp:"SQL",             niveau:"Avancé",        score:78},
+  {eid:"E036", comp:"React",           niveau:"Débutant",      score:44},
+  {eid:"E037", comp:"Java",            niveau:"Avancé",        score:82},
+  {eid:"E038", comp:"Réseaux",         niveau:"Intermédiaire", score:68},
+  {eid:"E039", comp:"Python",          niveau:"Expert",        score:93},
+  {eid:"E040", comp:"Machine Learning",niveau:"Intermédiaire", score:73},
+  {eid:"E041", comp:"Linux",           niveau:"Avancé",        score:79},
+  {eid:"E042", comp:"React",           niveau:"Intermédiaire", score:67},
+  {eid:"E043", comp:"NoSQL",           niveau:"Avancé",        score:81},
+  {eid:"E044", comp:"SQL",             niveau:"Intermédiaire", score:65},
+  {eid:"E045", comp:"Deep Learning",   niveau:"Avancé",        score:88},
+  {eid:"E046", comp:"Docker",          niveau:"Avancé",        score:84},
+  {eid:"E047", comp:"Python",          niveau:"Intermédiaire", score:74},
+  {eid:"E048", comp:"Réseaux",         niveau:"Débutant",      score:49},
+  {eid:"E049", comp:"Java",            niveau:"Intermédiaire", score:66},
+  {eid:"E050", comp:"Machine Learning",niveau:"Expert",        score:97}
+] AS m
+MATCH (e:Etudiant {id: m.eid}), (c:Competence {nom: m.comp})
+MERGE (e)-[:MAITRISE {niveau: m.niveau, score: m.score}]->(c);
+MATCH (n) RETURN labels(n)[0] AS type, count(n) AS total ORDER BY total DESC;
+MATCH ()-[r]->() RETURN type(r) AS relation, count(r) AS total ORDER BY total DESC;
